@@ -1,3 +1,3 @@
 export interface TSearch {
-    callback: () => void
+    callback: ( e: React.KeyboardEvent<HTMLInputElement> ) => void
 }

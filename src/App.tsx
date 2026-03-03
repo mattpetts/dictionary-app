@@ -42,7 +42,7 @@ function App() {
           <div className="w-3/12 bg-gray-100 dark:bg-slate-800 h-screen p-5 shadow-md">
             <h1 className="text-xl font-sans mb-5 text-blue-400 dark:text-orange-400 font-bold">Dictionary</h1>
             <div className="mb-5">
-              <Search callback={ ( e: any ) => setSearchTerm( e.target.value ) } />
+              <Search callback={ ( e: React.KeyboardEvent<HTMLInputElement> ) => setSearchTerm( e.currentTarget.value ) } />
             </div>
             <label className="block mb-2 text-sm font-sans">Font Style</label>
             <select className="mb-5 p-2 py-3 w-full rounded-sm outline-none font-sans bg-white dark:bg-slate-900" name="font" onChange={( e ) => setPageSettings( { ...pageSettings, font: e.target.value } ) } value={ pageSettings.font }>
