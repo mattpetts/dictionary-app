@@ -1,3 +1,3 @@
 export interface TSearch {
-    callback: Function
+    callback: () => void
 }
