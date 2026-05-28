@@ -20,16 +20,16 @@ function App() {
     useEffect(() => {
 
         if ( ! searchTerm ) {
-          return;
+            return;
         }
 
         const delaySearchRequest = setTimeout( async () => {
             try {
-              setError( false );
-              const data = await makeApiRequest( searchTerm );
-              setWordData( data[0] );
+                setError( false );
+                const data = await makeApiRequest( searchTerm );
+                setWordData( data[0] );
             } catch( error ) {
-              setError( true );
+                setError( true );
             }
         }, 2000)
 
@@ -38,35 +38,35 @@ function App() {
 
 
     return (
-      <div className={`w-full flex bg-white dark:bg-slate-900 text-black dark:text-white min-h-screen font-${ pageSettings.font } ${ pageSettings.dark ? 'dark' : '' }`}>
-          <div className="w-3/12 bg-gray-100 dark:bg-slate-800 h-screen p-5 shadow-md">
-            <h1 className="text-xl font-sans mb-5 text-blue-400 dark:text-orange-400 font-bold">Dictionary</h1>
-            <div className="mb-5">
-              <Search callback={ ( e: React.KeyboardEvent<HTMLInputElement> ) => setSearchTerm( e.currentTarget.value ) } />
+        <div className={`w-full flex flex-col md:flex-row bg-white dark:bg-slate-900 text-black dark:text-white min-h-screen font-${ pageSettings.font } ${ pageSettings.dark ? 'dark' : '' }`}>
+            <div className="w-full flex items-center gap-4 md:flex-col md:items-start md:w-3/12 fixed md:relative bg-gray-100 dark:bg-slate-800 h-auto md:h-screen p-5 shadow-md">
+                <h1 className="text-xl hidden md:block font-sans mb-5 text-blue-400 dark:text-orange-400 font-bold">Dictionary</h1>
+                <Search callback={ ( e: React.KeyboardEvent<HTMLInputElement> ) => setSearchTerm( e.currentTarget.value ) } />
+                <div className="w-full">
+                    <label className="hidden md:block mb-2 text-sm font-sans">Font Style</label>
+                    <select className="p-2 py-3 w-full rounded-sm outline-none font-sans bg-white dark:bg-slate-900" name="font" onChange={( e ) => setPageSettings( { ...pageSettings, font: e.target.value } ) } value={ pageSettings.font }>
+                        <option value="serif">Serif</option>
+                        <option value="sans">Sans-Serif</option>
+                    </select>
+                </div>
+                <div className="flex justify-start items-center font-sans">
+                    <button className="text-lg cursor-pointer rounded bg-gray-200 dark:bg-slate-900 p-3" onClick={ () => setPageSettings( { ...pageSettings, dark: ! pageSettings.dark } ) }>{ pageSettings.dark ? <FaSun /> : <FaMoon /> }</button>
+                </div>
             </div>
-            <label className="block mb-2 text-sm font-sans">Font Style</label>
-            <select className="mb-5 p-2 py-3 w-full rounded-sm outline-none font-sans bg-white dark:bg-slate-900" name="font" onChange={( e ) => setPageSettings( { ...pageSettings, font: e.target.value } ) } value={ pageSettings.font }>
-                <option value="serif">Serif</option>
-                <option value="sans">Sans-Serif</option>
-            </select>
-            <div className="flex justify-start items-center font-sans">
-                <button className="text-lg cursor-pointer rounded bg-gray-200 dark:bg-slate-900 p-3" onClick={ () => setPageSettings( { ...pageSettings, dark: ! pageSettings.dark } ) }>{ pageSettings.dark ? <FaSun /> : <FaMoon /> }</button>
+            <div className="w-full md:w-8/12 m-auto overflow-y-scroll h-screen pt-15 md:pt-0">
+                <div className="p-5">
+                    {wordData &&
+                        <>
+                        <Heading data={ wordData } />
+                            <div className="flex flex-col gap-5">
+                                { wordData.meanings.map( ( m ) => <Card meaning={ m } /> ) }
+                            </div>
+                        </>
+                    }
+                    { error && <div><p>Unable to find word!</p></div> }
+                </div>
             </div>
-          </div>
-          <div className="w-8/12 m-auto overflow-y-scroll h-screen">
-              <div className="p-5">
-                {wordData &&
-                  <>
-                    <Heading data={ wordData } />
-                    <div className="flex flex-col gap-5">
-                        { wordData.meanings.map( ( m ) => <Card meaning={ m } /> ) }
-                    </div>
-                  </>
-                }
-                { error && <div><p>Unable to find word!</p></div> }
-              </div>
-          </div>
-      </div>
+        </div>
     )
 }
 
