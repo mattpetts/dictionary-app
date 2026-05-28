@@ -32,10 +32,10 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/repo-name.git
+git clone https://github.com/mattpetts/dictionary-app.git
 
 # Navigate into the directory
-cd repo-name
+cd dictionary-app
 
 # Install dependencies
 npm install
