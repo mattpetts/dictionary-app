@@ -13,6 +13,7 @@
 
 - ✅ Uses external dictionary API
 - ✅ Debounce search
+- ✅ Responsive Layout
 
 ---
 
